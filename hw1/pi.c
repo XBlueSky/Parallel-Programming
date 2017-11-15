@@ -15,12 +15,12 @@ void* calculate_pi(void* thread){
     double max = 1.0;
     long long int i,tossesSum = 0;
     for(i=0;i<t;i++){
-	double x = (max - min)*rand_r(&seed)/(RAND_MAX + 1.0) +min;
+	    double x = (max - min)*rand_r(&seed)/(RAND_MAX + 1.0) +min;
         double y = (max - min)*rand_r(&seed)/(RAND_MAX + 1.0) +min;
         double distSqared = x*x + y*y;
-	if(distSqared <= 1){
-            tossesSum++;
-        }  
+        if(distSqared <= 1){
+                tossesSum++;
+            }  
     }
     pthread_mutex_lock(&mutex1);
     numInCircle += tossesSum;
