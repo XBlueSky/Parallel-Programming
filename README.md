@@ -1,1 +1,1 @@
-# Pthread-Programming
+# Parallel-Programming
