@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
     long long start = rank * part + 1;
     long long end = start + part;
-    if(rank == size -1) end = num_intervals;
+    if(rank == size -1) end = num_intervals + 1;
     sum = 0;
     sumTotal = 0;
 
