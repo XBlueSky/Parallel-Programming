@@ -97,7 +97,6 @@ void check_param(void)
 void printfinal()
 {
    int i;
-
    for (i = 0; i < tpoints; i++) {
       printf("%6.4f ", values[i]);
       if (i%10 == 0)
