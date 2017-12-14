@@ -109,8 +109,8 @@ void printfinal()
  *********************************************************************/
 int main(int argc, char *argv[])
 {
-	sscanf(argv[1],"%d",&tpoints);
-	sscanf(argv[2],"%d",&nsteps);
+    sscanf(argv[1],"%d",&tpoints);
+    sscanf(argv[2],"%d",&nsteps);
     check_param();
     float *gpuValue, *gpuOldval, *gpuNewval;
 
@@ -118,18 +118,16 @@ int main(int argc, char *argv[])
     cudaMalloc(&gpuOldval, sizeof(values));
     cudaMalloc(&gpuNewval, sizeof(values));
 
-	printf("Initializing points on the line...\n");
-    init_line<<<((tpoints + 1023) >> 10), 1024>>>(gpuValue, gpuOldval, tpoints);
-    cudaMemcpy(values, gpuValue, sizeof(values), cudaMemcpyDeviceToHost);
-    cudaMemcpy(oldval, gpuOldval, sizeof(values), cudaMemcpyDeviceToHost);
+    printf("Initializing points on the line...\n");
+    init_line<<<(tpoints/1024 + 1), 1024>>>(gpuValue, gpuOldval, tpoints);
 
     printf("Updating all points for all time steps...\n");
-	update<<<((tpoints + 1023) >> 10), 1024>>>(gpuValue, gpuOldval, gpuNewval, nsteps, tpoints);
+    update<<<(tpoints/1024 + 1), 1024>>>(gpuValue, gpuOldval, gpuNewval, nsteps, tpoints);
     cudaMemcpy(values, gpuValue, sizeof(values), cudaMemcpyDeviceToHost);
 
     printf("Printing final results...\n");
-	printfinal();
-	printf("\nDone.\n\n");
-	
-	return 0;
+    printfinal();
+    printf("\nDone.\n\n");
+
+    return 0;
 }
